@@ -30,18 +30,21 @@ public class CommandListener extends ListenerAdapter {
         try {
             event.deferReply().queue();
             var eventName = event.getName();
+
             switch (eventName) {
                 case "ping":
                     event.getHook().sendMessage(commandService.handlePingCommand(event)).setEphemeral(true).queue();
                     break;
-                case "yt-get":
-                    if (UrlUtil.isValidUrl(Objects.requireNonNull(event.getOption("url")).getAsString())) {
-                        event.getHook().sendFiles(commandService.handleYoutubeDownloadCommand(event)).queue();
+                case "vid-get":
+                    String url = Objects.requireNonNull(event.getOption("url")).getAsString();
+                    if (UrlUtil.isValidUrl(url) || UrlUtil.isDownloadableUrl(url)) {
+                        event.getHook().sendFiles(commandService.handleVideoDownloadCommand(event)).queue();
                     } else {
                         throw new UrlException("Not a valid url", event);
                     }
                     break;
             }
+
         } catch (Exception e) {
             globalExceptionHandler.handle(e, event);
         }

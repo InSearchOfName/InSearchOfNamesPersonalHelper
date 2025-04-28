@@ -27,7 +27,7 @@ public class CommandRegistrar {
         jda.updateCommands()
                 .addCommands(
                         Commands.slash("ping", "Pong!"),
-                        Commands.slash("yt-get", "Converts youtube video to a downloadable format")
+                        Commands.slash("vid-get", "Converts video to a downloadable format")
                                 .addOptions(
                                         new OptionData(OptionType.STRING, "url", "Url of the video", true)
                                 )
@@ -44,7 +44,7 @@ public class CommandRegistrar {
             guild.updateCommands()
                     .addCommands(
                             Commands.slash("ping", "Pong!"),
-                            Commands.slash("yt-get", "Converts youtube video to a downloadable format")
+                            Commands.slash("vid-get", "Converts video to a downloadable format")
                                     .addOptions(
                                             new OptionData(OptionType.STRING, "url", "Url of the video", true)
                                     )

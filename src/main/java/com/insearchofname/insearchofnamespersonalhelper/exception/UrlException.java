@@ -6,4 +6,5 @@ public class UrlException extends DiscordException {
     public UrlException(String message, SlashCommandInteractionEvent event) {
         super(message, event);
     }
+
 }

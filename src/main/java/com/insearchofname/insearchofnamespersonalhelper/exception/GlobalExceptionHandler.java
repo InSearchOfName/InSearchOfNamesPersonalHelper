@@ -1,5 +1,6 @@
 package com.insearchofname.insearchofnamespersonalhelper.exception;
 
+import com.insearchofname.insearchofnamespersonalhelper.util.UrlUtil;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,15 @@ public class GlobalExceptionHandler {
     }
 
     private void handleUrlException(UrlException ex) {
-        ex.getEvent().getHook().sendMessage("Invalid URL: " + ex.getMessage()).setEphemeral(true).queue();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Please keep in mind this bot CANNOT download images \n");
+        stringBuilder.append("Please use one of the following urls: \n");
+        stringBuilder.append(">>> ");
+        for (String url : UrlUtil.getURLS()){
+            stringBuilder.append("<").append(url).append("> ");
+            stringBuilder.append("\n");
+        }
+        ex.getEvent().getHook().sendMessage(stringBuilder.toString()).setEphemeral(true).queue();
     }
 
     private void handleDownloadException(DownloadException ex) {
