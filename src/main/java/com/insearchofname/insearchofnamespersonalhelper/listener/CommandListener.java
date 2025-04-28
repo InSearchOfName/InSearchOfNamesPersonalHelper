@@ -1,16 +1,12 @@
 package com.insearchofname.insearchofnamespersonalhelper.listener;
 
 import com.insearchofname.insearchofnamespersonalhelper.exception.GlobalExceptionHandler;
-import com.insearchofname.insearchofnamespersonalhelper.exception.UrlException;
 import com.insearchofname.insearchofnamespersonalhelper.service.CommandService;
-import com.insearchofname.insearchofnamespersonalhelper.util.UrlUtil;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 
 @Component
@@ -36,12 +32,7 @@ public class CommandListener extends ListenerAdapter {
                     event.getHook().sendMessage(commandService.handlePingCommand(event)).setEphemeral(true).queue();
                     break;
                 case "vid-get":
-                    String url = Objects.requireNonNull(event.getOption("url")).getAsString();
-                    if (UrlUtil.isValidUrl(url) || UrlUtil.isDownloadableUrl(url)) {
-                        event.getHook().sendFiles(commandService.handleVideoDownloadCommand(event)).queue();
-                    } else {
-                        throw new UrlException("Not a valid url", event);
-                    }
+                    event.getHook().sendFiles(commandService.handleVideoDownloadCommand(event).uploads()).queue();
                     break;
             }
 

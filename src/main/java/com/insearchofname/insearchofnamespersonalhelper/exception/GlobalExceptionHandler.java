@@ -12,6 +12,8 @@ public class GlobalExceptionHandler {
             handleUrlException((UrlException) ex);
         } else if (ex instanceof DownloadException) {
             handleDownloadException((DownloadException) ex);
+        } else if (ex instanceof CompressionException) {
+            handleCompressionException((CompressionException) ex);
         } else {
             handleGenericException(ex, event);
         }
@@ -22,7 +24,7 @@ public class GlobalExceptionHandler {
         stringBuilder.append("Please keep in mind this bot CANNOT download images \n");
         stringBuilder.append("Please use one of the following urls: \n");
         stringBuilder.append(">>> ");
-        for (String url : UrlUtil.getURLS()){
+        for (String url : UrlUtil.getURLS()) {
             stringBuilder.append("<").append(url).append("> ");
             stringBuilder.append("\n");
         }
@@ -31,6 +33,11 @@ public class GlobalExceptionHandler {
 
     private void handleDownloadException(DownloadException ex) {
         ex.getEvent().getHook().sendMessage("Download failed: " + ex.getMessage()).setEphemeral(true).queue();
+    }
+
+    private void handleCompressionException(CompressionException ex) {
+        ex.getEvent().getHook().sendMessage("Compression failed: " + ex.getMessage()).setEphemeral(true).queue();
+        ex.printStackTrace();
     }
 
     private void handleGenericException(Exception ex, SlashCommandInteractionEvent event) {
