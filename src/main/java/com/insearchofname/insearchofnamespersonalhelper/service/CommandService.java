@@ -24,7 +24,7 @@ public class CommandService {
     }
     //TODO add a compression mechanic so it actually downscales the size but for now not
     //TODO check the file size before download so it doesnt waste unnescarry download and processing
-    public Collection<? extends FileUpload> handleYoutubeDownloadCommand(SlashCommandInteractionEvent event) {
+    public Collection<? extends FileUpload> handleVideoDownloadCommand(SlashCommandInteractionEvent event) {
         String filename = UUID.randomUUID() + ".mp4";
 
         try {
